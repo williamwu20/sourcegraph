@@ -61,7 +61,7 @@ func TestCleanup_computeStats(t *testing.T) {
 
 	// We run cleanupRepos because we want to test as a side-effect it creates
 	// the correct file in the correct place.
-	s := &Server{ReposDir: root}
+	s := makeTestServer(context.Background(), root, "", nil)
 	s.Handler() // Handler as a side-effect sets up Server
 	s.cleanupRepos()
 
@@ -108,7 +108,7 @@ func TestCleanupInactive(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	s := &Server{ReposDir: root}
+	s := makeTestServer(context.Background(), root, "", nil)
 	s.Handler() // Handler as a side-effect sets up Server
 	s.cleanupRepos()
 
@@ -165,7 +165,7 @@ func TestGitGCAuto(t *testing.T) {
 	}
 
 	// Handler must be invoked for Server side-effects.
-	s := &Server{ReposDir: root}
+	s := makeTestServer(context.Background(), root, "", nil)
 	s.Handler()
 	s.cleanupRepos()
 
@@ -273,12 +273,10 @@ func TestCleanupExpired(t *testing.T) {
 	repoBoomTime := modTime(repoBoom)
 	repoBoomRecloneTime := recloneTime(repoBoom)
 
-	s := &Server{
-		ReposDir:         root,
-		GetRemoteURLFunc: getRemoteURL,
-		GetVCSSyncer: func(ctx context.Context, name api.RepoName) (VCSSyncer, error) {
-			return &GitRepoSyncer{}, nil
-		},
+	s := makeTestServer(context.Background(), root, "", nil)
+	s.GetRemoteURLFunc = getRemoteURL
+	s.GetVCSSyncer = func(ctx context.Context, name api.RepoName) (VCSSyncer, error) {
+		return &GitRepoSyncer{}, nil
 	}
 	s.Handler() // Handler as a side-effect sets up Server
 	s.cleanupRepos()
@@ -363,7 +361,7 @@ func TestCleanupOldLocks(t *testing.T) {
 	chtime("github.com/foo/stalepacked/.git/packed-refs.lock", 2*time.Hour)
 	chtime("github.com/foo/refslock/.git/refs/heads/stale.lock", 2*time.Hour)
 
-	s := &Server{ReposDir: root}
+	s := makeTestServer(context.Background(), root, "", nil)
 	s.Handler() // Handler as a side-effect sets up Server
 	s.cleanupRepos()
 
@@ -398,7 +396,7 @@ func TestCleanupOldLocks(t *testing.T) {
 func TestSetupAndClearTmp(t *testing.T) {
 	root := t.TempDir()
 
-	s := &Server{ReposDir: root}
+	s := makeTestServer(context.Background(), root, "", nil)
 
 	// All non .git paths should become .git
 	mkFiles(t, root,
@@ -460,7 +458,7 @@ func TestSetupAndClearTmp(t *testing.T) {
 func TestSetupAndClearTmp_Empty(t *testing.T) {
 	root := t.TempDir()
 
-	s := &Server{ReposDir: root}
+	s := makeTestServer(context.Background(), root, "", nil)
 
 	_, err := s.SetupAndClearTmp()
 	if err != nil {
@@ -510,10 +508,7 @@ func TestRemoveRepoDirectory(t *testing.T) {
 		idMapping[repo.Name] = repo.ID
 	}
 
-	s := &Server{
-		ReposDir: root,
-		DB:       db,
-	}
+	s := makeTestServer(context.Background(), root, "", db)
 
 	// Remove everything but github.com/foo/survivor
 	for _, d := range []string{
@@ -560,9 +555,7 @@ func TestRemoveRepoDirectory_Empty(t *testing.T) {
 	mkFiles(t, root,
 		"github.com/foo/baz/.git/HEAD",
 	)
-	s := &Server{
-		ReposDir: root,
-	}
+	s := makeTestServer(context.Background(), root, "", nil)
 
 	if err := s.removeRepoDirectory(GitDir(filepath.Join(root, "github.com/foo/baz/.git"))); err != nil {
 		t.Fatal(err)
@@ -575,9 +568,7 @@ func TestRemoveRepoDirectory_Empty(t *testing.T) {
 
 func TestHowManyBytesToFree(t *testing.T) {
 	const G = 1024 * 1024 * 1024
-	s := &Server{
-		DesiredPercentFree: 10,
-	}
+	s := makeTestServer(context.Background(), "", "", nil)
 
 	tcs := []struct {
 		name      string
@@ -607,12 +598,11 @@ func TestHowManyBytesToFree(t *testing.T) {
 
 	for _, tc := range tcs {
 		t.Run(tc.name, func(t *testing.T) {
-			s.DiskSizer = &fakeDiskSizer{
-				diskSize:  tc.diskSize,
-				bytesFree: tc.bytesFree,
-			}
 			s.DiskSpaceReclaimer = domain.NewDiskSpaceReclaimer(
-				s.DiskSizer,
+				&fakeDiskSizer{
+					diskSize:  tc.diskSize,
+					bytesFree: tc.bytesFree,
+				},
 				log15.New(),
 				float64(s.DesiredPercentFree),
 			)
@@ -722,13 +712,13 @@ func isEmptyDir(path string) (bool, error) {
 
 func TestFreeUpSpace(t *testing.T) {
 	t.Run("no error if no space requested and no repos", func(t *testing.T) {
-		s := &Server{DiskSizer: &fakeDiskSizer{}}
+		s := makeTestServer(context.Background(), "", "", nil)
 		if err := s.freeUpSpace(0); err != nil {
 			t.Fatal(err)
 		}
 	})
 	t.Run("error if space requested and no repos", func(t *testing.T) {
-		s := &Server{DiskSizer: &fakeDiskSizer{}}
+		s := makeTestServer(context.Background(), "", "", nil)
 		if err := s.freeUpSpace(1); err == nil {
 			t.Fatal("want error")
 		}
@@ -758,10 +748,7 @@ func TestFreeUpSpace(t *testing.T) {
 		}
 
 		// Run.
-		s := Server{
-			ReposDir:  rd,
-			DiskSizer: &fakeDiskSizer{},
-		}
+		s := makeTestServer(context.Background(), rd, "", nil)
 		if err := s.freeUpSpace(1000); err != nil {
 			t.Fatal(err)
 		}

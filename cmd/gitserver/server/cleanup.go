@@ -23,8 +23,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 
-	"github.com/sourcegraph/sourcegraph/cmd/gitserver/adapter"
-	"github.com/sourcegraph/sourcegraph/cmd/gitserver/domain"
 	"github.com/sourcegraph/sourcegraph/internal/api"
 	"github.com/sourcegraph/sourcegraph/internal/conf"
 	"github.com/sourcegraph/sourcegraph/internal/env"
@@ -303,17 +301,6 @@ func (s *Server) cleanupRepos() {
 		log15.Error("cleanup: failed to marshal periodic stats", "error", err)
 	} else if err = os.WriteFile(filepath.Join(s.ReposDir, reposStatsName), b, 0666); err != nil {
 		log15.Error("cleanup: failed to write periodic stats", "error", err)
-	}
-
-	if s.DiskSizer == nil {
-		s.DiskSizer = adapter.NewStatDiskSizer()
-	}
-	if s.DiskSpaceReclaimer == nil {
-		s.DiskSpaceReclaimer = domain.NewDiskSpaceReclaimer(
-			s.DiskSizer,
-			log15.New(),
-			float64(s.DesiredPercentFree),
-		)
 	}
 
 	b, err := s.DiskSpaceReclaimer.ReclaimIfNecessary(s.ReposDir)

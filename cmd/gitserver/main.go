@@ -17,6 +17,8 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/prometheus/client_golang/prometheus"
 
+	"github.com/sourcegraph/sourcegraph/cmd/gitserver/adapter"
+	"github.com/sourcegraph/sourcegraph/cmd/gitserver/domain"
 	"github.com/sourcegraph/sourcegraph/cmd/gitserver/server"
 	"github.com/sourcegraph/sourcegraph/internal/api"
 	"github.com/sourcegraph/sourcegraph/internal/authz"
@@ -100,6 +102,12 @@ func main() {
 	gitserver := server.Server{
 		ReposDir:           reposDir,
 		DesiredPercentFree: wantPctFree2,
+		DiskSizer:          adapter.NewStatDiskSizer(),
+		DiskSpaceReclaimer: domain.NewDiskSpaceReclaimer(
+			adapter.NewStatDiskSizer(),
+			log15.New(),
+			float64(wantPctFree2),
+		),
 		GetRemoteURLFunc: func(ctx context.Context, repo api.RepoName) (string, error) {
 			r, err := repoStore.GetByName(ctx, repo)
 			if err != nil {

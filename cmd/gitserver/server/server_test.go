@@ -23,6 +23,7 @@ import (
 	"github.com/inconshreveable/log15"
 	"golang.org/x/time/rate"
 
+	"github.com/sourcegraph/sourcegraph/cmd/gitserver/domain"
 	"github.com/sourcegraph/sourcegraph/internal/api"
 	"github.com/sourcegraph/sourcegraph/internal/database"
 	"github.com/sourcegraph/sourcegraph/internal/database/dbtesting"
@@ -466,7 +467,13 @@ func makeSingleCommitRepo(cmd func(string, ...string) string) string {
 
 func makeTestServer(ctx context.Context, repoDir, remote string, db dbutil.DB) *Server {
 	return &Server{
-		ReposDir:         repoDir,
+		ReposDir:  repoDir,
+		DiskSizer: &fakeDiskSizer{},
+		DiskSpaceReclaimer: domain.NewDiskSpaceReclaimer(
+			&fakeDiskSizer{},
+			log15.New(),
+			10,
+		),
 		GetRemoteURLFunc: staticGetRemoteURL(remote),
 		GetVCSSyncer: func(ctx context.Context, name api.RepoName) (VCSSyncer, error) {
 			return &GitRepoSyncer{}, nil
