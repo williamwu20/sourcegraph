@@ -23,6 +23,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 
+	"github.com/sourcegraph/sourcegraph/cmd/gitserver/adapter"
 	"github.com/sourcegraph/sourcegraph/internal/api"
 	"github.com/sourcegraph/sourcegraph/internal/conf"
 	"github.com/sourcegraph/sourcegraph/internal/env"
@@ -304,7 +305,7 @@ func (s *Server) cleanupRepos() {
 	}
 
 	if s.DiskSizer == nil {
-		s.DiskSizer = &StatDiskSizer{}
+		s.DiskSizer = adapter.NewStatDiskSizer()
 	}
 	b, err := s.howManyBytesToFree()
 	if err != nil {
@@ -339,26 +340,6 @@ func (s *Server) howManyBytesToFree() (int64, error) {
 		"actual percent free", float64(actualFreeBytes)/float64(diskSizeBytes)*100.0,
 		"amount to free in GiB", float64(howManyBytesToFree)/G)
 	return howManyBytesToFree, nil
-}
-
-type StatDiskSizer struct{}
-
-func (s *StatDiskSizer) BytesFreeOnDisk(mountPoint string) (uint64, error) {
-	var fs syscall.Statfs_t
-	if err := syscall.Statfs(mountPoint, &fs); err != nil {
-		return 0, errors.Wrap(err, "statting")
-	}
-	free := fs.Bavail * uint64(fs.Bsize)
-	return free, nil
-}
-
-func (s *StatDiskSizer) DiskSizeBytes(mountPoint string) (uint64, error) {
-	var fs syscall.Statfs_t
-	if err := syscall.Statfs(mountPoint, &fs); err != nil {
-		return 0, errors.Wrap(err, "statting")
-	}
-	free := fs.Blocks * uint64(fs.Bsize)
-	return free, nil
 }
 
 // freeUpSpace removes git directories under ReposDir, in order from least
