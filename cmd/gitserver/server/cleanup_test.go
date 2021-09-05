@@ -18,7 +18,9 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/google/go-cmp/cmp"
+	"github.com/inconshreveable/log15"
 
+	"github.com/sourcegraph/sourcegraph/cmd/gitserver/domain"
 	"github.com/sourcegraph/sourcegraph/internal/api"
 	"github.com/sourcegraph/sourcegraph/internal/database"
 	"github.com/sourcegraph/sourcegraph/internal/database/dbtesting"
@@ -609,7 +611,12 @@ func TestHowManyBytesToFree(t *testing.T) {
 				diskSize:  tc.diskSize,
 				bytesFree: tc.bytesFree,
 			}
-			b, err := s.howManyBytesToFree()
+			s.DiskSpaceReclaimer = domain.NewDiskSpaceReclaimer(
+				s.DiskSizer,
+				log15.New(),
+				float64(s.DesiredPercentFree),
+			)
+			b, err := s.DiskSpaceReclaimer.ReclaimIfNecessary(s.ReposDir)
 			if err != nil {
 				t.Fatal(err)
 			}

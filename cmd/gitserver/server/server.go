@@ -119,6 +119,10 @@ type Server struct {
 	// DiskSizer tells how much disk is free and how large the disk is.
 	DiskSizer domain.DiskSizer
 
+	// DiskSpaceReclaimer is used to garbage collect least-recently updated
+	// repositories to make space available on a volume.
+	DiskSpaceReclaimer *domain.DiskSpaceReclaimer
+
 	// GetRemoteURLFunc is a function which returns the remote URL for a
 	// repository. This is used when cloning or fetching a repository. In
 	// production this will speak to the database to look up the clone URL. In

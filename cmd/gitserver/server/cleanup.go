@@ -24,6 +24,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 
 	"github.com/sourcegraph/sourcegraph/cmd/gitserver/adapter"
+	"github.com/sourcegraph/sourcegraph/cmd/gitserver/domain"
 	"github.com/sourcegraph/sourcegraph/internal/api"
 	"github.com/sourcegraph/sourcegraph/internal/conf"
 	"github.com/sourcegraph/sourcegraph/internal/env"
@@ -307,39 +308,21 @@ func (s *Server) cleanupRepos() {
 	if s.DiskSizer == nil {
 		s.DiskSizer = adapter.NewStatDiskSizer()
 	}
-	b, err := s.howManyBytesToFree()
+	if s.DiskSpaceReclaimer == nil {
+		s.DiskSpaceReclaimer = domain.NewDiskSpaceReclaimer(
+			s.DiskSizer,
+			log15.New(),
+			float64(s.DesiredPercentFree),
+		)
+	}
+
+	b, err := s.DiskSpaceReclaimer.ReclaimIfNecessary(s.ReposDir)
 	if err != nil {
 		log15.Error("cleanup: ensuring free disk space", "error", err)
 	}
 	if err := s.freeUpSpace(b); err != nil {
 		log15.Error("cleanup: error freeing up space", "error", err)
 	}
-}
-
-// howManyBytesToFree returns the number of bytes that should be freed to make sure
-// there is sufficient disk space free to satisfy s.DesiredPercentFree.
-func (s *Server) howManyBytesToFree() (int64, error) {
-	actualFreeBytes, err := s.DiskSizer.BytesFreeOnDisk(s.ReposDir)
-	if err != nil {
-		return 0, errors.Wrap(err, "finding the amount of space free on disk")
-	}
-
-	// Free up space if necessary.
-	diskSizeBytes, err := s.DiskSizer.DiskSizeBytes(s.ReposDir)
-	if err != nil {
-		return 0, errors.Wrap(err, "getting disk size")
-	}
-	desiredFreeBytes := uint64(float64(s.DesiredPercentFree) / 100.0 * float64(diskSizeBytes))
-	howManyBytesToFree := int64(desiredFreeBytes - actualFreeBytes)
-	if howManyBytesToFree < 0 {
-		howManyBytesToFree = 0
-	}
-	const G = float64(1024 * 1024 * 1024)
-	log15.Debug("cleanup",
-		"desired percent free", s.DesiredPercentFree,
-		"actual percent free", float64(actualFreeBytes)/float64(diskSizeBytes)*100.0,
-		"amount to free in GiB", float64(howManyBytesToFree)/G)
-	return howManyBytesToFree, nil
 }
 
 // freeUpSpace removes git directories under ReposDir, in order from least
