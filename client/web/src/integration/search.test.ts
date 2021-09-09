@@ -537,7 +537,7 @@ describe('Search', () => {
                 waitUntil: 'networkidle0',
             })
             await resetCreateCodeMonitorFeatureTour()
-            await driver.page.waitForSelector('.search-result-match', { visible: true })
+            await driver.page.waitForSelector('.test-search-result-label', { visible: true })
             expect(await isCreateCodeMonitorFeatureTourVisible()).toBeFalsy()
         })
 
@@ -547,7 +547,7 @@ describe('Search', () => {
                 waitUntil: 'networkidle0',
             })
             await resetCreateCodeMonitorFeatureTour()
-            await driver.page.waitForSelector('.search-result-match', { visible: true })
+            await driver.page.waitForSelector('.test-search-result-label', { visible: true })
             expect(await isCreateCodeMonitorFeatureTourVisible()).toBeTruthy()
         })
 
@@ -557,7 +557,7 @@ describe('Search', () => {
                 waitUntil: 'networkidle0',
             })
             await resetCreateCodeMonitorFeatureTour(false)
-            await driver.page.waitForSelector('.search-result-match', { visible: true })
+            await driver.page.waitForSelector('.test-search-result-label', { visible: true })
             expect(await isCreateCodeMonitorFeatureTourVisible()).toBeFalsy()
         })
     })
