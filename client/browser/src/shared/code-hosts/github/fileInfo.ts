@@ -10,6 +10,7 @@ export const resolveDiffFileInfo = (codeView: HTMLElement): DiffInfo => {
         throw new Error('cannot determine file path')
     }
     const diffResolvedRevision = getDiffResolvedRevision(codeView)
+    console.log({ diffResolvedRevision })
     if (!diffResolvedRevision) {
         throw new Error('cannot determine delta info')
     }

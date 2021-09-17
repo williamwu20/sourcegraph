@@ -145,6 +145,7 @@ export const gitlabCodeHost = subtypeOf<CodeHost>()({
     getCommandPaletteMount,
     getContext: () => ({
         ...getPageInfo(),
+        // TODO: fix this
         privateRepository: window.location.hostname !== 'gitlab.com',
     }),
     urlToFile: (sourcegraphURL, target, context): string => {
