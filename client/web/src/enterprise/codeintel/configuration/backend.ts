@@ -114,7 +114,7 @@ export function repoName(id: string): Observable<RepositoryNameFields | null> {
     return requestGraphQL<RepositoryNameResult, RepositoryNameVariables>(query, { id }).pipe(
         map(dataOrThrowErrors),
         map(({ node }) => {
-            if (!node) {
+            if (!node || node.__typename !== 'Repository') {
                 throw new Error('No such Repository')
             }
             return node
