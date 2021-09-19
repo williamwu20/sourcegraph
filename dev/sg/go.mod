@@ -13,6 +13,7 @@ require (
 	github.com/jackc/pgx/v4 v4.11.0
 	github.com/peterbourgon/ff/v3 v3.0.0
 	github.com/rjeczalik/notify v0.9.2
+	github.com/slack-go/slack v0.9.5 // indirect
 	github.com/sourcegraph/sourcegraph/lib v0.0.0-20210906140940-dd601b549e29
 	golang.org/x/mod v0.4.2
 	golang.org/x/oauth2 v0.0.0-20210628180205-a41e5a781914

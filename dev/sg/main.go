@@ -187,6 +187,16 @@ See the "checks:" in the configuration file.`,
 		Exec:       rfcExec,
 	}
 
+	peopleFlagSet = flag.NewFlagSet("sg people", flag.ExitOnError)
+	peopleCommand = &ffcli.Command{
+		Name:       "people",
+		ShortUsage: "sg people [time|handbook]",
+		ShortHelp:  "Run the given people command show informations about people",
+		LongHelp:   `Display current time, handbook link of sourcegraphers`,
+		FlagSet:    peopleFlagSet,
+		Exec:       peopleExec,
+	}
+
 	funkyLogoFlagSet = flag.NewFlagSet("sg logo", flag.ExitOnError)
 	funkLogoCommand  = &ffcli.Command{
 		Name:       "logo",
@@ -223,6 +233,7 @@ var (
 			liveCommand,
 			migrationCommand,
 			rfcCommand,
+			peopleCommand,
 			funkLogoCommand,
 		},
 	}
