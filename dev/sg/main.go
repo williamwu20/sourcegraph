@@ -198,7 +198,7 @@ See the "checks:" in the configuration file.`,
 	}
 
 	funkyLogoFlagSet = flag.NewFlagSet("sg logo", flag.ExitOnError)
-	funkLogoCommand  = &ffcli.Command{
+	funkyLogoCommand = &ffcli.Command{
 		Name:       "logo",
 		ShortUsage: "sg logo [classic]",
 		ShortHelp:  "Print the sg logo",
@@ -234,7 +234,7 @@ var (
 			migrationCommand,
 			rfcCommand,
 			peopleCommand,
-			funkLogoCommand,
+			funkyLogoCommand,
 		},
 	}
 )
