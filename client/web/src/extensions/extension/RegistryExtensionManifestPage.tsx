@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import EyeIcon from 'mdi-react/EyeIcon'
 import InformationOutlineIcon from 'mdi-react/InformationOutlineIcon'
 import * as React from 'react'
@@ -14,7 +13,6 @@ import { DynamicallyImportedMonacoSettingsEditor } from '../../settings/Dynamica
 import { eventLogger } from '../../tracking/eventLogger'
 
 import { ExtensionAreaRouteContext } from './ExtensionArea'
-import styles from './RegistryExtensionManifestPage.module.scss'
 
 export const ExtensionNoManifestAlert: React.FunctionComponent<{
     extension: ConfiguredRegistryExtension
@@ -65,7 +63,7 @@ export class RegistryExtensionManifestPage extends React.PureComponent<Props, St
 
     public render(): JSX.Element | null {
         return (
-            <div>
+            <div className="registry-extension-manifest-page">
                 <PageTitle title={`Manifest of ${this.props.extension.id}`} />
                 <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center">
@@ -107,7 +105,7 @@ export class RegistryExtensionManifestPage extends React.PureComponent<Props, St
                             telemetryService={this.props.telemetryService}
                         />
                     ) : (
-                        <pre className={classNames('form-control', styles.plainViewer)}>
+                        <pre className="form-control registry-extension-manifest-page__plain-viewer">
                             <code>{this.props.extension.rawManifest}</code>
                         </pre>
                     )}

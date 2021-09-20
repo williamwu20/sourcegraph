@@ -8,7 +8,6 @@ exports[`Notices shows notices for location 1`] = `
 >
   <div
     className="alert bg-transparent border"
-    data-testid="notice-alert"
   >
     <div
       className="markdown"

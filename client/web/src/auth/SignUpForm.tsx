@@ -24,7 +24,6 @@ import { enterpriseTrial, signupTerms } from '../util/features'
 
 import { OrDivider } from './OrDivider'
 import { EmailInput, PasswordInput, UsernameInput } from './SignInSignUpCommon'
-import signInSignUpCommonStyles from './SignInSignUpCommon.module.scss'
 
 export interface SignUpArguments {
     email: string
@@ -140,7 +139,8 @@ export const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
             {/* eslint-disable-next-line react/forbid-elements */}
             <form
                 className={classNames(
-                    !experimental && signInSignUpCommonStyles.signinSignupForm,
+                    !experimental && 'signin-signup-form',
+                    !experimental && 'signup-form',
                     'test-signup-form',
                     !experimental && 'rounded p-4',
                     'text-left',
@@ -164,7 +164,7 @@ export const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                         loading={emailState.kind === 'LOADING'}
                     >
                         <EmailInput
-                            className={deriveInputClassName(emailState)}
+                            className={classNames('signin-signup-form__input', deriveInputClassName(emailState))}
                             onChange={nextEmailFieldChange}
                             required={true}
                             value={emailState.value}
@@ -190,7 +190,7 @@ export const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                         loading={usernameState.kind === 'LOADING'}
                     >
                         <UsernameInput
-                            className={deriveInputClassName(usernameState)}
+                            className={classNames('signin-signup-form__input', deriveInputClassName(usernameState))}
                             onChange={nextUsernameFieldChange}
                             value={usernameState.value}
                             required={true}
@@ -219,7 +219,7 @@ export const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                         loading={passwordState.kind === 'LOADING'}
                     >
                         <PasswordInput
-                            className={deriveInputClassName(passwordState)}
+                            className={classNames('signin-signup-form__input', deriveInputClassName(passwordState))}
                             onChange={nextPasswordFieldChange}
                             value={passwordState.value}
                             required={true}

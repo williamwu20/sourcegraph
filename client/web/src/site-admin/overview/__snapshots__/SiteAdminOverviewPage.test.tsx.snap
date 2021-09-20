@@ -130,7 +130,9 @@ exports[`SiteAdminOverviewPage >= 2 users 1`] = `
           </svg>
         </button>
       </div>
-      <div>
+      <div
+        className="site-admin-usage-statistics-page"
+      >
         <div
           className="site-admin-overview-page__detail-header"
         >
@@ -162,7 +164,7 @@ exports[`SiteAdminOverviewPage >= 2 users 1`] = `
           viewBox="0 0 500 200"
         />
         <small
-          className="tzNote"
+          className="site-admin-usage-statistics-page__tz-note"
         >
           <i>
             GMT/UTC time

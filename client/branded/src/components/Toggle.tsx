@@ -1,8 +1,6 @@
 import classnames from 'classnames'
 import * as React from 'react'
 
-import styles from './Toggle.module.scss'
-
 interface Props {
     /** The initial value. */
     value?: boolean
@@ -60,7 +58,7 @@ export const Toggle: React.FunctionComponent<Props> = ({
     return (
         <button
             type="button"
-            className={classnames(styles.toggle, className)}
+            className={classnames('toggle', className, {})}
             id={id}
             title={title}
             value={value ? 1 : 0}
@@ -75,13 +73,13 @@ export const Toggle: React.FunctionComponent<Props> = ({
             data-test={dataTest}
         >
             <span
-                className={classnames(styles.bar, {
-                    [styles.barOn]: value,
+                className={classnames('toggle__bar', {
+                    'toggle__bar--on': value,
                 })}
             />
             <span
-                className={classnames(styles.knob, {
-                    [styles.knobOn]: value,
+                className={classnames('toggle__knob', {
+                    'toggle__knob--on': value,
                 })}
             />
         </button>

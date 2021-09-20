@@ -16,7 +16,6 @@ import { RouteDescriptor } from '../util/contributions'
 
 import { ExtensionAreaRoute } from './extension/ExtensionArea'
 import { ExtensionAreaHeaderNavItem } from './extension/ExtensionAreaHeader'
-import styles from './ExtensionsArea.module.scss'
 import { ExtensionsAreaHeader, ExtensionsAreaHeaderActionButton } from './ExtensionsAreaHeader'
 
 const NotFoundPage: React.FunctionComponent = () => <HeroPage icon={MapSearchIcon} title="404: Not Found" />
@@ -86,7 +85,7 @@ export const ExtensionsArea: React.FunctionComponent<ExtensionsAreaProps> = prop
     }
 
     return (
-        <Page className={styles.extensionsArea}>
+        <Page className="extensions-area">
             <ExtensionsAreaHeader
                 {...props}
                 {...context}

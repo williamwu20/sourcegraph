@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import * as H from 'history'
 import React, { useMemo } from 'react'
 
@@ -17,7 +16,6 @@ import { ExtensionCard } from './ExtensionCard'
 import { ExtensionCategoryOrAll, ExtensionListData, ExtensionsEnablement } from './ExtensionRegistry'
 import { applyEnablementFilter, applyWIPFilter } from './extensions'
 import { ExtensionsAreaRouteContext } from './ExtensionsArea'
-import styles from './ExtensionsList.module.scss'
 
 interface Props
     extends SettingsCascadeProps,
@@ -116,14 +114,14 @@ export const ExtensionsList: React.FunctionComponent<Props> = ({
     const { error, extensions, extensionIDsByCategory, featuredExtensions } = data
 
     const featuredExtensionsSection = featuredExtensions && featuredExtensions.length > 0 && (
-        <div key="Featured" className={styles.featuredSection}>
+        <div key="Featured" className="extensions-list__featured-section">
             <h3
-                className={classNames('mb-3 font-weight-normal', styles.category)}
+                className="extensions-list__category mb-3 font-weight-normal"
                 data-test-extension-category-header="Featured"
             >
                 Featured
             </h3>
-            <div className={classNames('mt-1', styles.cards, styles.cardsFeatured)}>
+            <div className="extensions-list__cards extensions-list__cards--featured mt-1">
                 {featuredExtensions.map(featuredExtension => (
                     <ExtensionCard
                         key={featuredExtension.id}
@@ -189,12 +187,12 @@ export const ExtensionsList: React.FunctionComponent<Props> = ({
             return (
                 <div key={category} className="mt-1">
                     <h3
-                        className={classNames('mb-3 font-weight-normal', styles.category)}
+                        className="extensions-list__category mb-3 font-weight-normal"
                         data-test-extension-category-header={category}
                     >
                         {category}
                     </h3>
-                    <div className={classNames('mt-1', styles.cards)}>
+                    <div className="extensions-list__cards mt-1">
                         {extensionIDsForCategory.slice(0, 6).map(extensionId => (
                             <ExtensionCard
                                 key={extensionId}
@@ -243,12 +241,12 @@ export const ExtensionsList: React.FunctionComponent<Props> = ({
         categorySections = [
             <div key={selectedCategory} className="mt-1">
                 <h3
-                    className={classNames('mb-3 font-weight-normal', styles.category)}
+                    className="extensions-list__category mb-3 font-weight-normal"
                     data-test-extension-category-header={selectedCategory}
                 >
                     {selectedCategory}
                 </h3>
-                <div className={classNames('mt-1', styles.cards)}>
+                <div className="extensions-list__cards mt-1">
                     {extensionIDs.map(extensionId => (
                         <ExtensionCard
                             key={extensionId}

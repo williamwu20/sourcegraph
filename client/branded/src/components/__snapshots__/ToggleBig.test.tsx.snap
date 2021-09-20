@@ -5,7 +5,7 @@ exports[`ToggleBig className 1`] = `
   className="c"
 >
   <button
-    className="toggleBig container c"
+    className="toggle-big toggle-big__container c"
     disabled={false}
     onClick={[Function]}
     onFocus={[Function]}
@@ -15,16 +15,16 @@ exports[`ToggleBig className 1`] = `
     value={0}
   >
     <span
-      className="bar"
+      className="toggle-big__bar"
     />
     <span
-      className="barShadow"
+      className="toggle-big__bar-shadow"
     />
     <span
-      className="d-flex flex-column justify-content-center align-items-center knob"
+      className="toggle-big__knob d-flex flex-column justify-content-center align-items-center"
     />
     <span
-      className="text"
+      className="toggle-big__text"
     >
       Disabled
     </span>
@@ -38,7 +38,7 @@ exports[`ToggleBig disabled 1`] = `
   onToggle={[Function]}
 >
   <button
-    className="toggleBig container"
+    className="toggle-big toggle-big__container"
     disabled={true}
     onClick={[Function]}
     onFocus={[Function]}
@@ -48,16 +48,16 @@ exports[`ToggleBig disabled 1`] = `
     value={0}
   >
     <span
-      className="bar"
+      className="toggle-big__bar"
     />
     <span
-      className="barShadow"
+      className="toggle-big__bar-shadow"
     />
     <span
-      className="d-flex flex-column justify-content-center align-items-center knob"
+      className="toggle-big__knob d-flex flex-column justify-content-center align-items-center"
     />
     <span
-      className="text"
+      className="toggle-big__text"
     >
       Disabled
     </span>
@@ -71,7 +71,7 @@ exports[`ToggleBig value is false 1`] = `
 >
   <button
     aria-checked={false}
-    className="toggleBig container"
+    className="toggle-big toggle-big__container"
     disabled={false}
     onClick={[Function]}
     onFocus={[Function]}
@@ -81,16 +81,16 @@ exports[`ToggleBig value is false 1`] = `
     value={0}
   >
     <span
-      className="bar"
+      className="toggle-big__bar"
     />
     <span
-      className="barShadow"
+      className="toggle-big__bar-shadow"
     />
     <span
-      className="d-flex flex-column justify-content-center align-items-center knob"
+      className="toggle-big__knob d-flex flex-column justify-content-center align-items-center"
     />
     <span
-      className="text"
+      className="toggle-big__text"
     >
       Disabled
     </span>
@@ -104,7 +104,7 @@ exports[`ToggleBig value is true 1`] = `
 >
   <button
     aria-checked={true}
-    className="toggleBig container"
+    className="toggle-big toggle-big__container"
     disabled={false}
     onClick={[Function]}
     onFocus={[Function]}
@@ -114,21 +114,21 @@ exports[`ToggleBig value is true 1`] = `
     value={1}
   >
     <span
-      className="bar barOn"
+      className="toggle-big__bar toggle-big__bar--on"
     />
     <span
-      className="barShadow barShadowOn"
+      className="toggle-big__bar-shadow toggle-big__bar-shadow--on"
     />
     <span
-      className="d-flex flex-column justify-content-center align-items-center knob knobOn"
+      className="toggle-big__knob d-flex flex-column justify-content-center align-items-center toggle-big__knob--on"
     >
       <Memo(CheckIcon)
-        className="iconOn"
+        className="toggle-big__icon--on"
         size={16}
       />
     </span>
     <span
-      className="text textOn"
+      className="toggle-big__text toggle-big__text--on"
     >
       Enabled
     </span>

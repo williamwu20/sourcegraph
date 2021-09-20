@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import * as H from 'history'
 import * as React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
@@ -14,9 +13,7 @@ import { PageTitle } from '../components/PageTitle'
 import { eventLogger } from '../tracking/eventLogger'
 
 import { SourcegraphIcon } from './icons'
-import styles from './ResetPasswordPage.module.scss'
 import { PasswordInput } from './SignInSignUpCommon'
-import signInSignUpCommonStyles from './SignInSignUpCommon.module.scss'
 
 interface ResetPasswordInitFormState {
     /** The user's email input value. */
@@ -47,10 +44,7 @@ class ResetPasswordInitForm extends React.PureComponent<ResetPasswordInitFormPro
         if (this.state.submitOrError === null) {
             return (
                 <>
-                    <div
-                        className={classNames('border rounded p-4 mb-3', signInSignUpCommonStyles.signinSignupForm)}
-                        data-testid="reset-password-page-form"
-                    >
+                    <div className="reset-password-page__form signin-signup-form border rounded p-4 mb-3">
                         <p className="text-left mb-0">Check your email for a link to reset your password.</p>
                     </div>
                     <span className="form-text text-muted">
@@ -66,12 +60,7 @@ class ResetPasswordInitForm extends React.PureComponent<ResetPasswordInitFormPro
                     <ErrorAlert className="mt-2" error={this.state.submitOrError} />
                 )}
                 <Form
-                    className={classNames(
-                        'border rounded p-4 mb-3',
-                        signInSignUpCommonStyles.signinSignupForm,
-                        styles.form
-                    )}
-                    data-testid="reset-password-page-form"
+                    className="reset-password-page__form signin-signup-form border rounded p-4 mb-3"
                     onSubmit={this.handleSubmitResetPasswordInit}
                 >
                     <p className="text-left">
@@ -185,12 +174,7 @@ class ResetPasswordCodeForm extends React.PureComponent<ResetPasswordCodeFormPro
                     <ErrorAlert className="mt-2" error={this.state.submitOrError} />
                 )}
                 <Form
-                    className={classNames(
-                        'border rounded p-4 mb-3',
-                        signInSignUpCommonStyles.signinSignupForm,
-                        styles.form
-                    )}
-                    data-testid="reset-password-page-form"
+                    className="reset-password-page__form signin-signup-form border rounded p-4 mb-3"
                     onSubmit={this.handleSubmitResetPassword}
                 >
                     <p className="text-left">Enter a new password for your account.</p>
@@ -301,9 +285,7 @@ export class ResetPasswordPage extends React.PureComponent<ResetPasswordPageProp
                     iconLinkTo={window.context.sourcegraphDotComMode ? '/search' : undefined}
                     iconClassName="bg-transparent"
                     title="Reset your password"
-                    body={
-                        <div className={classNames('mt-4', signInSignUpCommonStyles.signinPageContainer)}>{body}</div>
-                    }
+                    body={<div className="mt-4 signin-page__container">{body}</div>}
                 />
             </>
         )

@@ -4,7 +4,6 @@ import React, { FunctionComponent, ReactNode } from 'react'
 
 import { Collapsible } from './Collapsible'
 import { Timestamp } from './time/Timestamp'
-import styles from './Timeline.module.scss'
 
 export interface TimelineStage {
     icon: ReactNode
@@ -43,7 +42,7 @@ export const Timeline: FunctionComponent<TimelineProps> = ({ stages, now, classN
                     {previousDate && (
                         <div className="d-flex align-items-center">
                             <div className="flex-0">
-                                <div className={styles.executorTaskSeparator} />
+                                <div className="timeline__executor-task-separator" />
                             </div>
                             <div className="flex-1">
                                 <span className="text-muted ml-4">
@@ -62,7 +61,7 @@ export const Timeline: FunctionComponent<TimelineProps> = ({ stages, now, classN
                                 titleAtStart={true}
                                 defaultExpanded={stage.expanded}
                             >
-                                <div className={styles.executorTaskDetails}>{stage.details}</div>
+                                <div className="timeline__executor-task-details">{stage.details}</div>
                             </Collapsible>
                         </>
                     ) : (
@@ -83,7 +82,7 @@ export const TimelineMeta: FunctionComponent<TimelineMetaProps> = ({ stage, now 
     <>
         <div className="d-flex align-items-center">
             <div className="flex-0 m-2">
-                <div className={classNames(styles.executorTaskIcon, stage.className)}>{stage.icon}</div>
+                <div className={classNames('timeline__executor-task-icon', stage.className)}>{stage.icon}</div>
             </div>
             <div className="flex-1">
                 {stage.text}{' '}

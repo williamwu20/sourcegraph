@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import { parseISO } from 'date-fns'
 import differenceInDays from 'date-fns/differenceInDays'
 import * as React from 'react'
@@ -20,7 +19,6 @@ import { LicenseExpirationAlert } from '../site/LicenseExpirationAlert'
 import { NeedsRepositoryConfigurationAlert } from '../site/NeedsRepositoryConfigurationAlert'
 
 import { GlobalAlert } from './GlobalAlert'
-import styles from './GlobalAlerts.module.scss'
 import { Notices } from './Notices'
 
 interface Props extends SettingsCascadeProps {
@@ -49,22 +47,22 @@ export class GlobalAlerts extends React.PureComponent<Props, State> {
 
     public render(): JSX.Element | null {
         return (
-            <div className={classNames('test-global-alert', styles.globalAlerts)}>
+            <div className="global-alerts test-global-alert">
                 {this.state.siteFlags && (
                     <>
                         {this.state.siteFlags.needsRepositoryConfiguration && (
-                            <NeedsRepositoryConfigurationAlert className={styles.alert} />
+                            <NeedsRepositoryConfigurationAlert className="global-alerts__alert" />
                         )}
                         {this.state.siteFlags.freeUsersExceeded && (
                             <FreeUsersExceededAlert
                                 noLicenseWarningUserCount={
                                     this.state.siteFlags.productSubscription.noLicenseWarningUserCount
                                 }
-                                className={styles.alert}
+                                className="global-alerts__alert"
                             />
                         )}
                         {/* Only show if the user has already added repositories; if not yet, the user wouldn't experience any Docker for Mac perf issues anyway. */}
-                        {window.context.likelyDockerOnMac && <DockerForMacAlert className={styles.alert} />}
+                        {window.context.likelyDockerOnMac && <DockerForMacAlert className="global-alerts__alert" />}
                         {window.context.sourcegraphDotComMode && (
                             <CodeHostScopeAlerts authenticatedUser={this.props.authenticatedUser} />
                         )}
@@ -72,7 +70,7 @@ export class GlobalAlerts extends React.PureComponent<Props, State> {
                             <GitLabScopeAlert authenticatedUser={this.props.authenticatedUser} />
                         )}
                         {this.state.siteFlags.alerts.map((alert, index) => (
-                            <GlobalAlert key={index} alert={alert} className={styles.alert} />
+                            <GlobalAlert key={index} alert={alert} className="global-alerts__alert" />
                         ))}
                         {this.state.siteFlags.productSubscription.license &&
                             (() => {
@@ -82,7 +80,7 @@ export class GlobalAlerts extends React.PureComponent<Props, State> {
                                         <LicenseExpirationAlert
                                             expiresAt={expiresAt}
                                             daysLeft={Math.floor(differenceInDays(expiresAt, Date.now()))}
-                                            className={styles.alert}
+                                            className="global-alerts__alert"
                                         />
                                     )
                                 )
@@ -96,7 +94,7 @@ export class GlobalAlerts extends React.PureComponent<Props, State> {
                         <DismissibleAlert
                             key={motd}
                             partialStorageKey={`motd.${motd}`}
-                            className={classNames('alert-info', styles.alert)}
+                            className="alert-info global-alerts__alert"
                         >
                             <Markdown dangerousInnerHTML={renderMarkdown(motd)} />
                         </DismissibleAlert>
@@ -105,7 +103,7 @@ export class GlobalAlerts extends React.PureComponent<Props, State> {
                     <DismissibleAlert
                         key="dev-web-server-alert"
                         partialStorageKey="dev-web-server-alert"
-                        className={classNames('alert-danger', styles.alert)}
+                        className="alert-danger global-alerts__alert"
                     >
                         <div>
                             <strong>Warning!</strong> This build uses data from the proxied API:{' '}
@@ -116,7 +114,11 @@ export class GlobalAlerts extends React.PureComponent<Props, State> {
                         .
                     </DismissibleAlert>
                 )}
-                <Notices alertClassName={styles.alert} location="top" settingsCascade={this.props.settingsCascade} />
+                <Notices
+                    alertClassName="global-alerts__alert"
+                    location="top"
+                    settingsCascade={this.props.settingsCascade}
+                />
             </div>
         )
     }

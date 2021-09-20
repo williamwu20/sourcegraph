@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import ArchiveIcon from 'mdi-react/ArchiveIcon'
 import LockIcon from 'mdi-react/LockIcon'
 import SourceForkIcon from 'mdi-react/SourceForkIcon'
@@ -14,7 +13,6 @@ import { renderMarkdown } from '@sourcegraph/shared/src/util/markdown'
 import { formatRepositoryStarCount } from '@sourcegraph/shared/src/util/stars'
 
 import { CommitSearchResultMatch } from './CommitSearchResultMatch'
-import styles from './SearchResult.module.scss'
 
 interface Props {
     result: CommitMatch | RepositoryMatch
@@ -26,24 +24,28 @@ export const SearchResult: React.FunctionComponent<Props> = ({ result, icon, rep
     const renderTitle = (): JSX.Element => {
         const formattedRepositoryStarCount = formatRepositoryStarCount(result.repoStars)
         return (
-            <div className={styles.title}>
+            <div className="search-result__title">
                 <RepoIcon repoName={repoName} className="icon-inline text-muted flex-shrink-0" />
                 <Markdown
                     className="test-search-result-label ml-1 flex-shrink-past-contents text-truncate"
                     dangerousInnerHTML={renderMarkdown(getMatchTitle(result))}
                 />
-                <span className={styles.spacer} />
+                <span className="search-result__spacer" />
                 {result.type === 'commit' && result.detail && (
                     <>
                         <Markdown className="flex-shrink-0" dangerousInnerHTML={renderMarkdown(result.detail)} />
                     </>
                 )}
                 {result.type === 'commit' && result.detail && formattedRepositoryStarCount && (
-                    <div className={styles.divider} />
+                    <div className="search-result__divider" />
                 )}
                 {formattedRepositoryStarCount && (
                     <>
+<<<<<<< HEAD
                         <SearchResultStar />
+=======
+                        <StarIcon className="search-result__star" />
+>>>>>>> parent of bf7289eafb... web: codemod `web/components` components to CSS modules [2] (#24664)
                         {formattedRepositoryStarCount}
                     </>
                 )}
@@ -55,19 +57,17 @@ export const SearchResult: React.FunctionComponent<Props> = ({ result, icon, rep
         if (result.type === 'repo') {
             return (
                 <div>
-                    <div className={classNames(styles.searchResultMatch, 'p-2 flex-column')}>
+                    <div className="search-result-match p-2 flex-column">
                         {result.repoLastFetched && <LastSyncedIcon lastSyncedTime={result.repoLastFetched} />}
                         <div className="d-flex align-items-center flex-row">
-                            <div className={styles.matchType}>
+                            <div className="search-result__match-type">
                                 <small>Repository match</small>
                             </div>
                             {result.fork && (
                                 <>
-                                    <div className={styles.divider} />
+                                    <div className="search-result__divider" />
                                     <div>
-                                        <SourceForkIcon
-                                            className={classNames('icon-inline flex-shrink-0 text-muted', styles.icon)}
-                                        />
+                                        <SourceForkIcon className="search-result__icon icon-inline flex-shrink-0 text-muted" />
                                     </div>
                                     <div>
                                         <small>Fork</small>
@@ -76,11 +76,9 @@ export const SearchResult: React.FunctionComponent<Props> = ({ result, icon, rep
                             )}
                             {result.archived && (
                                 <>
-                                    <div className={styles.divider} />
+                                    <div className="search-result__divider" />
                                     <div>
-                                        <ArchiveIcon
-                                            className={classNames('icon-inline flex-shrink-0 text-muted', styles.icon)}
-                                        />
+                                        <ArchiveIcon className="search-result__icon icon-inline flex-shrink-0 text-muted" />
                                     </div>
                                     <div>
                                         <small>Archived</small>
@@ -89,11 +87,9 @@ export const SearchResult: React.FunctionComponent<Props> = ({ result, icon, rep
                             )}
                             {result.private && (
                                 <>
-                                    <div className={styles.divider} />
+                                    <div className="search-result__divider" />
                                     <div>
-                                        <LockIcon
-                                            className={classNames('icon-inline flex-shrink-0 text-muted', styles.icon)}
-                                        />
+                                        <LockIcon className="search-result__icon icon-inline flex-shrink-0 text-muted" />
                                     </div>
                                     <div>
                                         <small>Private</small>
@@ -103,8 +99,8 @@ export const SearchResult: React.FunctionComponent<Props> = ({ result, icon, rep
                         </div>
                         {result.description && (
                             <>
-                                <div className={styles.dividerVertical} />
-                                <div>
+                                <div className="search-result__divider-vertical" />
+                                <div className="search-result__description">
                                     <small>
                                         <em>{result.description}</em>
                                     </small>

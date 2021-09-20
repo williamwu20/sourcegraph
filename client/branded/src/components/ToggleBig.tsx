@@ -1,8 +1,6 @@
-import classNames from 'classnames'
+import classnames from 'classnames'
 import Check from 'mdi-react/CheckIcon'
 import * as React from 'react'
-
-import styles from './ToggleBig.module.scss'
 
 interface Props {
     /** The initial value. */
@@ -71,7 +69,7 @@ export const ToggleBig: React.FunctionComponent<Props> = ({
     return (
         <button
             type="button"
-            className={classNames(styles.toggleBig, styles.container, className)}
+            className={classnames('toggle-big toggle-big__container', className)}
             id={id}
             title={title}
             value={value ? 1 : 0}
@@ -85,23 +83,23 @@ export const ToggleBig: React.FunctionComponent<Props> = ({
             data-test={dataTest}
         >
             <span
-                className={classNames(styles.bar, {
-                    [styles.barOn]: value,
+                className={classnames('toggle-big__bar', {
+                    'toggle-big__bar--on': value,
                 })}
             />
             <span
-                className={classNames(styles.barShadow, {
-                    [styles.barShadowOn]: value,
+                className={classnames('toggle-big__bar-shadow', {
+                    'toggle-big__bar-shadow--on': value,
                 })}
             />
             <span
-                className={classNames('d-flex flex-column justify-content-center align-items-center', styles.knob, {
-                    [styles.knobOn]: value,
+                className={classnames('toggle-big__knob d-flex flex-column justify-content-center align-items-center', {
+                    'toggle-big__knob--on': value,
                 })}
             >
-                {value && <Check size={16} className={styles.iconOn} />}
+                {value && <Check size={16} className="toggle-big__icon--on" />}
             </span>
-            <span className={classNames(styles.text, { [styles.textOn]: value })}>
+            <span className={classnames('toggle-big__text', { 'toggle-big__text--on': value })}>
                 {value ? 'Enabled' : 'Disabled'}
             </span>
         </button>

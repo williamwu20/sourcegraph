@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -16,7 +15,6 @@ import { PageTitle } from '../components/PageTitle'
 import { eventLogger } from '../tracking/eventLogger'
 
 import { createUser } from './backend'
-import styles from './SiteAdminCreateUserPage.module.scss'
 
 interface State {
     errorDescription?: string
@@ -127,7 +125,7 @@ export class SiteAdminCreateUserPage extends React.Component<RouteComponentProps
                     </div>
                 ) : (
                     <Form onSubmit={this.onSubmit} className="site-admin-create-user-page__form">
-                        <div className={classNames('form-group', styles.formGroup)}>
+                        <div className="form-group site-admin-create-user-page__form-group">
                             <label htmlFor="site-admin-create-user-page__form-username">Username</label>
                             <UsernameInput
                                 id="site-admin-create-user-page__form-username"
@@ -142,7 +140,7 @@ export class SiteAdminCreateUserPage extends React.Component<RouteComponentProps
                                 with a dot, nor begin with a hyphen.
                             </small>
                         </div>
-                        <div className={classNames('form-group', styles.formGroup)}>
+                        <div className="form-group site-admin-create-user-page__form-group">
                             <label htmlFor="site-admin-create-user-page__form-email">Email</label>
                             <EmailInput
                                 id="site-admin-create-user-page__form-email"

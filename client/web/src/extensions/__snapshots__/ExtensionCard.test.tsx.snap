@@ -2,22 +2,22 @@
 
 exports[`ExtensionCard renders 1`] = `
 <div
-  className="card position-relative flex-1 extensionCard"
+  className="extension-card card position-relative flex-1"
 >
   <div
     className="card-body p-0 extension-card__body d-flex flex-column position-relative"
   >
     <div
-      className="d-flex align-items-center backgroundSection blue"
+      className="extension-card__background-section d-flex align-items-center blue"
     >
       <img
         alt=""
-        className="icon"
+        className="extension-card__icon"
         src="data:image/png,abcd"
       />
     </div>
     <div
-      className="w-100 flex-grow-1 detailsSection"
+      className="extension-card__details-section w-100 flex-grow-1"
     >
       <div
         className="mb-2"
@@ -38,7 +38,7 @@ exports[`ExtensionCard renders 1`] = `
         </span>
       </div>
       <div
-        className="mt-3 description"
+        className="mt-3 extension-card__description"
       >
         <span
           className=""
@@ -48,7 +48,7 @@ exports[`ExtensionCard renders 1`] = `
       </div>
     </div>
     <div
-      className="d-flex flex-column align-items-end mt-1 togglesSection"
+      className="extension-card__toggles-section d-flex flex-column align-items-end mt-1"
     >
       <div
         className="px-1"
@@ -80,10 +80,10 @@ exports[`ExtensionCard renders 1`] = `
           value={0}
         >
           <span
-            className="bar"
+            className="toggle__bar"
           />
           <span
-            className="knob"
+            className="toggle__knob"
           />
         </button>
       </div>

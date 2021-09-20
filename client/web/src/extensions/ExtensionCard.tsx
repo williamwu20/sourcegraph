@@ -22,7 +22,6 @@ import { AuthenticatedUser } from '../auth'
 import { isExtensionAdded } from './extension/extension'
 import { ExtensionConfigurationState } from './extension/ExtensionConfigurationState'
 import { ExtensionStatusBadge } from './extension/ExtensionStatusBadge'
-import styles from './ExtensionCard.module.scss'
 import headerColorStyles from './ExtensionHeader.module.scss'
 import { ExtensionToggle, OptimisticUpdateFailure } from './ExtensionToggle'
 import { DefaultExtensionIcon, DefaultSourcegraphExtensionIcon, SourcegraphExtensionIcon } from './icons'
@@ -179,22 +178,21 @@ export const ExtensionCard = memo<Props>(function ExtensionCard({
         return headerColorFromExtensionID(extension.id)
     }, [manifest?.headerColor, extension.id])
 
-    const iconClassName = classNames(styles.icon, featured && styles.iconFeatured)
+    const iconClassName = classNames('extension-card__icon', featured && 'extension-card__icon--featured')
 
     return (
         <div
-            className={classNames('card position-relative flex-1', styles.extensionCard, {
-                [classNames('p-0 m-0', styles.extensionCardEnabled)]: change === 'enabled',
+            className={classNames('extension-card card position-relative flex-1', {
+                'p-0 m-0 extension-card--enabled': change === 'enabled',
             })}
         >
             <div className="card-body p-0 extension-card__body d-flex flex-column position-relative">
                 {/* Section 1: Icon w/ background */}
                 <div
                     className={classNames(
-                        'd-flex align-items-center',
-                        styles.backgroundSection,
+                        'extension-card__background-section d-flex align-items-center',
                         headerColorStyles[headerColorClassName],
-                        featured && styles.backgroundSectionFeatured
+                        featured && 'extension-card__background-section--featured'
                     )}
                 >
                     {icon ? (
@@ -207,12 +205,12 @@ export const ExtensionCard = memo<Props>(function ExtensionCard({
                     {extension.registryExtension?.isWorkInProgress && (
                         <ExtensionStatusBadge
                             viewerCanAdminister={extension.registryExtension.viewerCanAdminister}
-                            className={styles.badge}
+                            className="extension-card__badge"
                         />
                     )}
                 </div>
                 {/* Section 2: Extension details. This should be the section that grows to fill remaining space. */}
-                <div className={classNames('w-100 flex-grow-1', styles.detailsSection)}>
+                <div className="extension-card__details-section w-100 flex-grow-1">
                     <div className="mb-2">
                         <h3 className="mb-0 mr-1 text-truncate flex-1">
                             <Link to={`/extensions/${extension.id}`}>{name}</Link>
@@ -220,11 +218,16 @@ export const ExtensionCard = memo<Props>(function ExtensionCard({
                         <span>
                             by {publisher}
                             {isSourcegraphExtension && (
-                                <SourcegraphExtensionIcon className={classNames('icon-inline', styles.logo)} />
+                                <SourcegraphExtensionIcon className="icon-inline extension-card__logo" />
                             )}
                         </span>
                     </div>
-                    <div className={classNames('mt-3', styles.description, featured && styles.descriptionFeatured)}>
+                    <div
+                        className={classNames(
+                            'mt-3 extension-card__description',
+                            featured && 'extension-card__description--featured'
+                        )}
+                    >
                         {extension.manifest ? (
                             isErrorLike(extension.manifest) ? (
                                 <span className="text-danger small" title={extension.manifest.message}>
@@ -243,7 +246,7 @@ export const ExtensionCard = memo<Props>(function ExtensionCard({
                     </div>
                 </div>
                 {/* Item 3: Toggle(s) */}
-                <div className={classNames('d-flex flex-column align-items-end mt-1', styles.togglesSection)}>
+                <div className="extension-card__toggles-section d-flex flex-column align-items-end mt-1">
                     <div className="px-1">
                         {/* User toggle */}
                         {subject &&
@@ -289,7 +292,7 @@ export const ExtensionCard = memo<Props>(function ExtensionCard({
 
             {/* Visual feedback: alert when optimistic update fails */}
             {optimisticFailure && (
-                <div className={classNames('alert alert-danger px-2 py-1', styles.alert)}>
+                <div className="alert alert-danger px-2 py-1 extension-card__alert">
                     <span className="font-weight-medium">Error:</span> {actionableErrorMessage(optimisticFailure.error)}
                 </div>
             )}

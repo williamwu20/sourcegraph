@@ -7,8 +7,6 @@ import * as React from 'react'
 
 import { ThemeProps } from '@sourcegraph/shared/src/theme'
 
-import styles from './BarChart.module.scss'
-
 interface BarChartSeries {
     [key: string]: null
 }
@@ -92,7 +90,7 @@ export class BarChart<T extends BarChartSeries> extends React.Component<Props<T>
         const barWidth = width / columns - 2
 
         const barHolder = svg
-            .classed(`${styles.d3BarChart} ${this.props.className || ''}`, true)
+            .classed(`d3-bar-chart ${this.props.className || ''}`, true)
             .attr('preserveAspectRatio', 'xMinYMin')
             .append('g')
             .classed('bar-holder', true)

@@ -142,7 +142,7 @@ exports[`SignUpPage renders sign up page (cloud) 1`] = `
 
 exports[`SignUpPage renders sign up page (server) 1`] = `
 <div
-  className="signinSignupPage"
+  className="signin-signup-page sign-up-page"
 >
   <div
     className="heroPage lessPadding"
@@ -177,10 +177,10 @@ exports[`SignUpPage renders sign up page (server) 1`] = `
       Sign up for Sourcegraph Server
     </div>
     <div
-      className="pb-5 signupPageContainer"
+      className="signup-page__container pb-5"
     >
       <form
-        className="signinSignupForm test-signup-form rounded p-4 text-left mt-4"
+        className="signin-signup-form signup-form test-signup-form rounded p-4 text-left mt-4"
         noValidate={true}
         onSubmit={[Function]}
       >
@@ -199,7 +199,7 @@ exports[`SignUpPage renders sign up page (server) 1`] = `
             <input
               autoComplete="email"
               autoFocus={true}
-              className="form-control"
+              className="form-control signin-signup-form__input"
               disabled={false}
               id="email"
               name="email"
@@ -227,7 +227,7 @@ exports[`SignUpPage renders sign up page (server) 1`] = `
             <input
               autoCapitalize="off"
               autoComplete="username"
-              className="form-control"
+              className="form-control signin-signup-form__input"
               disabled={false}
               id="username"
               maxLength={255}
@@ -256,7 +256,7 @@ exports[`SignUpPage renders sign up page (server) 1`] = `
           >
             <input
               autoComplete="new-password"
-              className="form-control"
+              className="form-control signin-signup-form__input"
               disabled={false}
               formNoValidate={true}
               id="password"

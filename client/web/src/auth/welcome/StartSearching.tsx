@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
 
 import { Link } from '@sourcegraph/shared/src/components/Link'
@@ -14,8 +13,6 @@ import { Terminal, TerminalTitle, TerminalLine, TerminalDetails, TerminalProgres
 import { useExternalServices } from '../useExternalServices'
 import { useRepoCloningStatus } from '../useRepoCloningStatus'
 import { selectedReposVar, useSaveSelectedRepos, MinSelectedRepo } from '../useSelectedRepos'
-
-import styles from './StartSearching.module.scss'
 
 interface StartSearching {
     user: AuthenticatedUser
@@ -156,13 +153,13 @@ export const StartSearching: React.FunctionComponent<StartSearching> = ({
                 <Terminal>
                     {!isDoneCloning && (
                         <TerminalLine>
-                            <code className={classNames('mb-2', styles.loading)}>Cloning Repositories</code>
+                            <code className="mb-2 post-signup-page__loading">Cloning Repositories</code>
                         </TerminalLine>
                     )}
                     {isLoading && (
                         <TerminalLine>
                             <TerminalTitle>
-                                <code className={classNames('mb-2', styles.loading)}>Loading</code>
+                                <code className="mb-2 post-signup-page__loading">Loading</code>
                             </TerminalTitle>
                         </TerminalLine>
                     )}
