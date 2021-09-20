@@ -187,14 +187,14 @@ See the "checks:" in the configuration file.`,
 		Exec:       rfcExec,
 	}
 
-	peopleFlagSet = flag.NewFlagSet("sg people", flag.ExitOnError)
-	peopleCommand = &ffcli.Command{
-		Name:       "people",
-		ShortUsage: "sg people [time|handbook]",
-		ShortHelp:  "Run the given people command show informations about people",
+	teammatesFlagSet = flag.NewFlagSet("sg teammates", flag.ExitOnError)
+	teammatesCommand = &ffcli.Command{
+		Name:       "teammates",
+		ShortUsage: "sg teammates [time|handbook]",
+		ShortHelp:  "Run the given teammates command show informations about teammates",
 		LongHelp:   `Display current time, handbook link of sourcegraphers`,
-		FlagSet:    peopleFlagSet,
-		Exec:       peopleExec,
+		FlagSet:    teammatesFlagSet,
+		Exec:       teammatesExec,
 	}
 
 	funkyLogoFlagSet = flag.NewFlagSet("sg logo", flag.ExitOnError)
@@ -233,7 +233,7 @@ var (
 			liveCommand,
 			migrationCommand,
 			rfcCommand,
-			peopleCommand,
+			teammatesCommand,
 			funkyLogoCommand,
 		},
 	}

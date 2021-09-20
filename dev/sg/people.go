@@ -7,9 +7,9 @@ import (
 	"github.com/sourcegraph/sourcegraph/dev/sg/internal/slack"
 )
 
-func peopleExec(ctx context.Context, args []string) error {
+func teammatesExec(ctx context.Context, args []string) error {
 	if len(args) == 0 {
-		return errors.New("no people command given")
+		return errors.New("no teammates command given")
 	}
 	switch args[0] {
 	case "time":
