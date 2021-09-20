@@ -365,7 +365,6 @@ Go,github.com/gorilla/securecookie,v1.1.1,New BSD,"",Approved
 Go,github.com/gorilla/sessions,v1.2.1,New BSD,"",Approved
 Go,github.com/gosimple/slug,v1.1.1,Mozilla Public License 2.0,"",Approved
 Go,github.com/goware/urlx,v0.3.1,MIT,"",Approved
-Go,github.com/grafana-tools/sdk,v0.0.0-20210709154219-f35c5af8140d,Apache 2.0,"",Approved
 Go,github.com/graph-gophers/graphql-go,v0.0.0-20201113091052-beb923fada29,Simplified BSD,"",Approved
 Go,github.com/graphql-go/graphql,v0.7.9,MIT,"",Approved
 Go,github.com/gregjones/httpcache,v0.0.0-20190611155906-901d90724c79,MIT,"",Approved
@@ -448,7 +447,6 @@ Go,github.com/snabb/diagio,v1.0.0,MIT,"",Approved
 Go,github.com/snabb/sitemap,v1.0.0,MIT,"",Approved
 Go,github.com/sourcegraph/alertmanager,v0.21.1-0.20210809100802-88b656a8713e,Apache 2.0,"",Approved
 Go,github.com/sourcegraph/annotate,v0.0.0-20160123013949-f4cad6c6324d,New BSD,"",Approved
-Go,github.com/sourcegraph/batch-change-utils,v0.0.0-20210708162152-c9f35b905d94,Apache 2.0,"",Approved
 Go,github.com/sourcegraph/ctxvfs,v0.0.0-20180418081416-2b65f1b1ea81,MIT,"",Approved
 Go,github.com/sourcegraph/go-ctags,v0.0.0-20210805071240-8c61152fb089,Apache 2.0,"",Approved
 Go,github.com/sourcegraph/go-diff,v0.6.1,MIT,"",Approved
@@ -459,12 +457,13 @@ Go,github.com/sourcegraph/go-rendezvous,v0.0.0-20210819140028-cdd914a24376,MIT,"
 Go,github.com/sourcegraph/gologin,v1.0.2-0.20181110030308-c6f1b62954d8,MIT,"",Approved
 Go,github.com/sourcegraph/gosaml2,v0.6.1-0.20210128133756-84151d087b10,Apache 2.0,"",Approved
 Go,github.com/sourcegraph/gosyntect,v0.0.0-20210422223331-645353f16ddc,MIT,"",Approved
+Go,github.com/sourcegraph/grafana-sdk,v0.0.0-20210914025534-b4255965ba53,Apache 2.0,"",Approved
 Go,github.com/sourcegraph/httpgzip,v0.0.0-20210213125624-48ebf036a6a1,MIT,"",Approved
 Go,github.com/sourcegraph/jsonx,v0.0.0-20200629203448-1a936bd500cf,MIT,"",Approved
 Go,github.com/sourcegraph/oauth2,v0.0.0-20210825125341-77c1d99ece3c,New BSD,"",Approved
 Go,github.com/sourcegraph/syntaxhighlight,v0.0.0-20170531221838-bd320f5d308e,New BSD,"",Approved
 Go,github.com/sourcegraph/yaml,v1.0.1-0.20200714132230-56936252f152,MIT,"",Approved
-Go,github.com/sourcegraph/zoekt,v0.0.0-20210908064810-6a4adda25a6c,Apache 2.0,"",Approved
+Go,github.com/sourcegraph/zoekt,v0.0.0-20210914071702-65ca553d3a98,Apache 2.0,"",Approved
 Go,github.com/src-d/gcfg,v1.4.0,New BSD,"",Approved
 Go,github.com/stripe/stripe-go,v70.15.0,MIT,"",Approved
 Go,github.com/throttled/throttled/v2,v2.7.1,New BSD,"",Approved
@@ -799,3 +798,4 @@ Yarn,wrappy,1.0.2,ISC,https://github.com/npm/wrappy,Approved
 Yarn,yallist,4.0.0,ISC,http://blog.izs.me/,Approved
 Yarn,yocto-queue,0.1.0,MIT,https://sindresorhus.com,Approved
 Yarn,zen-observable,0.8.15,MIT,https://github.com/zenparsing/zen-observable,Approved
+Yarn,zustand,3.5.10,MIT,https://github.com/pmndrs/zustand,Approved
