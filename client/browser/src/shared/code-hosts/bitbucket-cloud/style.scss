@@ -13,9 +13,56 @@ $suffix: --bitbucket-cloud;
     }
 }
 
+.action-item-active-base {
+    background: rgba(9, 30, 66, 0.08);
+    transition: background 100ms;
+}
+
 .icon#{$suffix} {
     height: 1rem;
     width: 1rem;
+}
+
+.pressed#{$suffix} {
+    @extend .action-item-active-base;
+}
+
+.open-on-sourcegraph#{$suffix} {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(9, 30, 66, 0.04);
+    margin-left: 4px;
+
+    &:hover {
+        @extend .action-item-active-base;
+    }
+}
+
+.code-view-toolbar {
+    &#{$suffix} {
+        height: 32px;
+    }
+
+    &__list-item#{$suffix} {
+        height: 100%;
+    }
+
+    &__action-item#{$suffix} {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin: 0 4px;
+        padding: 0 8px;
+        border-radius: 3px;
+
+        &:hover {
+            @extend .action-item-active-base;
+        }
+    }
 }
 
 .hover-overlay {

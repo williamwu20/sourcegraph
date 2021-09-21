@@ -1,5 +1,6 @@
 import { NotificationType } from '@sourcegraph/shared/src/api/extension/extensionHostApi'
 
+import { querySelectorOrSelf } from '../../util/dom'
 import { BlobInfo, CodeHost, CodeHostContext } from '../shared/codeHost'
 import { CodeView, DOMFunctions } from '../shared/codeViews'
 import { RepoURLParseError } from '../shared/errors'
@@ -214,17 +215,8 @@ function getToolbarMount(codeView: HTMLElement): HTMLElement {
 }
 
 /**
- * A code view spec for single file code view in the "source" view (not diff).
+ * Used for single file code views and pull requests.
  */
-const singleFileSourceCodeView: Omit<CodeView, 'element'> = {
-    getToolbarMount,
-    dom: singleFileDOMFunctions,
-    resolveFileInfo: getFileInfoFromSingleFileSourceCodeView,
-    toolbarButtonProps: {
-        className: '',
-    },
-}
-
 const codeViewResolver: ViewResolver<CodeView> = {
     selector: element => {
         // The "code view" element has no class, ID, or data attributes, so
@@ -252,8 +244,83 @@ const codeViewResolver: ViewResolver<CodeView> = {
     resolveView: element => {
         console.log({ element })
         // TODO check if diff or single file
-        return { element, ...singleFileSourceCodeView }
+
+        return {
+            element,
+            getToolbarMount,
+            dom: singleFileDOMFunctions,
+            resolveFileInfo: getFileInfoFromSingleFileSourceCodeView,
+        }
     },
+}
+
+/**
+ * Used for commit and compare pages.
+ * Compare page is not included in the sidebar.
+ */
+// const compareCodeViewResolver: ViewResolver<CodeView> = {
+//     selector: () => {
+//         return null
+//     },
+//     resolveView: element => {},
+// }
+
+function getCommandPaletteMount(container: HTMLElement): HTMLElement | null {
+    const globalNavigationContainerSelector = '[data-testid="GlobalNavigation"] > div'
+    const className = 'command-palette-button'
+
+    // Very brittle
+    const globalNavigationContainer = querySelectorOrSelf<HTMLElement>(container, globalNavigationContainerSelector)
+    if (!globalNavigationContainer) {
+        return null
+    }
+
+    function createCommandList(): HTMLElement | null {
+        const topNavigationItemsContainer = globalNavigationContainer?.firstElementChild
+        if (!topNavigationItemsContainer) {
+            return null
+        }
+
+        const mount = document.createElement('div')
+        mount.classList.add(className)
+        mount.className = className
+        topNavigationItemsContainer?.append(mount)
+        return mount
+    }
+
+    return globalNavigationContainer.querySelector<HTMLElement>('.' + className) ?? createCommandList()
+}
+
+function getViewContextOnSourcegraphMount(container: HTMLElement): HTMLElement | null {
+    const OPEN_ON_SOURCEGRAPH_ID = 'open-on-sourcegraph'
+
+    const pageHeader = querySelectorOrSelf(container, '[data-qa="page-header-wrapper"] > div > div')
+    if (!pageHeader) {
+        return null
+    }
+
+    let mount = pageHeader.querySelector<HTMLElement>('#' + OPEN_ON_SOURCEGRAPH_ID)
+    if (mount) {
+        return mount
+    }
+    mount = document.createElement('span')
+    mount.id = OPEN_ON_SOURCEGRAPH_ID
+
+    // At the time of development, the page header element had two children: breadcrumbs container and
+    // page title + actions containers' container.
+    // Try to add the view on Sourcegraph button as a child of the actions container.
+
+    // This is brittle since it relies on DOM structure and not classes. If it fails in the future,
+    // fallback to appending as last child of page header. This is still aesthetically acceptable.
+
+    const actionsContainer = pageHeader.childNodes[1]?.childNodes[1].firstChild
+    if (actionsContainer instanceof HTMLElement) {
+        actionsContainer.append(mount)
+    } else {
+        pageHeader.append(mount)
+    }
+
+    return mount
 }
 
 const suffix = (className: string): string => className + '--bitbucket-cloud'
@@ -263,9 +330,22 @@ export const bitbucketCloudCodeHost: CodeHost = {
     name: 'Bitbucket Cloud',
     codeViewResolvers: [codeViewResolver],
     getContext,
-    getViewContextOnSourcegraphMount: undefined,
+    getViewContextOnSourcegraphMount,
     check: checkIsBitbucketCloud,
+    getCommandPaletteMount,
     // TODO class names props
+    viewOnSourcegraphButtonClassProps: {
+        className: suffix('open-on-sourcegraph'),
+        iconClassName: suffix('icon'),
+    },
+    commandPaletteClassProps: {},
+    codeViewToolbarClassProps: {
+        className: suffix('code-view-toolbar'),
+        listItemClass: suffix('code-view-toolbar__list-item'),
+        actionItemClass: suffix('code-view-toolbar__action-item'),
+        actionItemPressedClass: suffix('pressed'),
+        actionItemIconClass: suffix('icon'),
+    },
     hoverOverlayClassProps: {
         className: suffix('hover-overlay'),
         closeButtonClassName: suffix('hover-overlay__close'),
