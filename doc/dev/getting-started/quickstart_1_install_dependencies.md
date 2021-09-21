@@ -14,20 +14,15 @@ Sourcegraph has the following dependencies:
 - [Redis](http://redis.io/) (v5.0.7 or higher)
 - [Yarn](https://yarnpkg.com) (v1.10.1 or higher)
 - [SQLite](https://www.sqlite.org/index.html) tools
-- [Golang Migrate](https://github.com/golang-migrate/migrate/) (v4.7.0 or higher)
 - [Comby](https://github.com/comby-tools/comby/) (v0.11.3 or higher)
-- [Watchman](https://facebook.github.io/watchman/)
 
 Running Postgres via Docker vs Manually
 - You can choose to install Redis and/or PostgreSQL directly on your system, or you can run them as docker containers with [docker compose](https://docs.docker.com/compose/). The following instructions will describe both options.
-
 - Running within a container provides some advantages such as storing the data separately from the container, you do not need to run it as a system service and its easy to use different database versions or multiple databases.
-
 - Running as system services might yield better performance, especially on macOS.
-
 - No matter which option you choose, docker is required because the development server starts additional docker containers.
 
-The following are two recommendations for installing these dependencies (See below for asdf for an alternate way of managing dependencies):
+The following are two recommendations for installing these dependencies (See below `asdf` for an alternate way of managing dependencies):
 
 ## macOS
 
@@ -40,14 +35,14 @@ The following are two recommendations for installing these dependencies (See bel
     brew install --cask docker
     ```
 
-3.  Install Go, Yarn, Git, golang-migrate, Comby, SQLite tools, and jq with the following command:
+3.  Install Go, Yarn, Git, Comby, SQLite tools, and jq with the following command:
 
     ```
-    brew install go yarn git gnu-sed golang-migrate comby sqlite pcre FiloSottile/musl-cross/musl-cross jq watchman
+    brew install go yarn git gnu-sed comby sqlite pcre FiloSottile/musl-cross/musl-cross jq
     ```
 
 4. Choose to run Postgres and Redis manually (Option a.) or via Docker (Option b.)
-    
+
     a. (without docker) Install PostgreSQL and Redis
 
     If you want to run Redis and/or PostgreSQL directly on your system install them with the follwing command:
@@ -166,14 +161,6 @@ The following are two recommendations for installing these dependencies (See bel
     sudo apt install -y redis-server
     sudo apt install -y postgresql postgresql-contrib
 
-    # Install golang-migrate
-    curl -L https://github.com/golang-migrate/migrate/releases/download/v4.7.0/migrate.linux-amd64.tar.gz | tar xvz
-
-    # The extracted binary must be in your $PATH available as `golang-migrate`.
-    # Here's how you'd move it to `/usr/local/bin` (which is most likely in your `$PATH`):
-    chmod +x migrate.linux-amd64
-    mv migrate.linux-amd64 /usr/local/bin/golang-migrate
-
     # Install comby
     curl -L https://github.com/comby-tools/comby/releases/download/0.11.3/comby-0.11.3-x86_64-linux.tar.gz | tar xvz
 
@@ -181,17 +168,6 @@ The following are two recommendations for installing these dependencies (See bel
     # Here's how you'd move it to `/usr/local/bin` (which is most likely in your `$PATH`):
     chmod +x comby-*-linux
     mv comby-*-linux /usr/local/bin/comby
-
-    # Install watchman (you must put the binary and shared libraries on your $PATH and $LD_LIBRARY_PATH)
-    curl -LO https://github.com/facebook/watchman/releases/download/v2020.07.13.00/watchman-v2020.07.13.00-linux.zip
-    unzip watchman-*-linux.zip
-    sudo mkdir -p /usr/local/var/run/watchman
-    sudo cp watchman-*-linux/bin/* /usr/local/bin
-    sudo cp watchman-*-linux/lib/* /usr/local/lib
-    sudo chmod 755 /usr/local/bin/watchman
-    sudo chmod 2777 /usr/local/var/run/watchman
-    # On Linux, you may need to run the following in addition:
-    watchman watch <path to sourcegraph repository>
 
     # Install nvm (to manage Node.js)
     NVM_VERSION="$(curl https://api.github.com/repos/nvm-sh/nvm/releases/latest | jq -r .name)"
