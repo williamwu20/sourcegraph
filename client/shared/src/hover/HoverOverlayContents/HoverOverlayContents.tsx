@@ -8,7 +8,6 @@ import { isErrorLike } from '../../util/errors'
 import { HoverOverlayBaseProps } from '../HoverOverlay.types'
 
 import { HoverOverlayContent } from './HoverOverlayContent'
-
 interface HoverOverlayContentsProps extends Pick<HoverOverlayBaseProps, 'hoverOrError'> {
     iconClassName?: string
     badgeClassName?: string

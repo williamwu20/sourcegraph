@@ -14,8 +14,8 @@ import { toNativeEvent } from './helpers'
 import type { HoverContext, HoverOverlayBaseProps, GetAlertClassName } from './HoverOverlay.types'
 import { HoverOverlayAlerts, HoverOverlayAlertsProps } from './HoverOverlayAlerts'
 import { HoverOverlayContents } from './HoverOverlayContents'
+import style from './HoverOverlayContents.module.scss'
 import { useLogTelemetryEvent } from './useLogTelemetryEvent'
-
 const LOADING = 'loading' as const
 
 const transformMouseEvent = (handler: (event: MouseEvent) => void) => (event: React.MouseEvent<HTMLElement>) =>
@@ -104,9 +104,9 @@ export const HoverOverlay: React.FunctionComponent<HoverOverlayProps> = props =>
         >
             <div
                 className={classNames(
-                    'hover-overlay__contents',
-                    hoverOrError === LOADING && 'hover-overlay__contents--loading',
-                    showCloseButton && 'hover-overlay__contents--with-close-button'
+                    style.hoverOverlayContents,
+                    hoverOrError === LOADING && style.hoverOverlayContentsLoading,
+                    showCloseButton && style.hoverOverlayContentsWithCloseButton
                 )}
             >
                 {showCloseButton && (

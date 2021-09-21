@@ -7,6 +7,8 @@ import { LinkOrSpan } from '../../../components/LinkOrSpan'
 import { asError } from '../../../util/errors'
 import { renderMarkdown } from '../../../util/markdown'
 
+import style from './HoverOverlayContent.module.scss'
+
 interface HoverOverlayContentProps {
     content: HoverMerged['contents'][number]
     aggregatedBadges: HoverMerged['aggregatedBadges']
@@ -28,7 +30,7 @@ export const HoverOverlayContent: React.FunctionComponent<HoverOverlayContentPro
 
     if (content.kind !== 'markdown') {
         return (
-            <span className="hover-overlay__content">
+            <span className={classNames(style.hoverOverlayContent)}>
                 <p>{content.value}</p>
             </span>
         )
@@ -61,7 +63,7 @@ export const HoverOverlayContent: React.FunctionComponent<HoverOverlayContentPro
                 </small>
             ))}
             <span
-                className="hover-overlay__content test-tooltip-content"
+                className={classNames(style.hoverOverlayContent, 'test-tooltip-content')}
                 dangerouslySetInnerHTML={{ __html: markdownOrError }}
             />
         </>

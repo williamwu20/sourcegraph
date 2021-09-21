@@ -5,6 +5,9 @@ import { HoverAlert } from 'sourcegraph'
 import { NotificationType } from '../../api/extension/extensionHostApi'
 import { renderMarkdown } from '../../util/markdown'
 import { GetAlertClassName } from '../HoverOverlay.types'
+import contentStyles from '../HoverOverlayContents/HoverOverlayContent/HoverOverlayContent.module.scss'
+
+import styles from './HoverOverlayAlerts.module.scss'
 
 export interface HoverOverlayAlertsProps {
     hoverAlerts: HoverAlert[]
@@ -12,6 +15,7 @@ export interface HoverOverlayAlertsProps {
     /** Called when an alert is dismissed, with the type of the dismissed alert. */
     onAlertDismissed?: (alertType: string) => void
     getAlertClassName?: GetAlertClassName
+    className?: string
 }
 
 const iconKindToNotificationType: Record<Required<HoverAlert>['iconKind'], Parameters<GetAlertClassName>[0]> = {
@@ -32,7 +36,7 @@ export const HoverOverlayAlerts: React.FunctionComponent<HoverOverlayAlertsProps
     }
 
     return (
-        <div className="hover-overlay__alerts">
+        <div className={classNames(styles.hoverOverlayAlerts, props.className)}>
             {hoverAlerts.map(({ summary, iconKind, type }, index) => (
                 <div
                     key={index}
@@ -42,10 +46,10 @@ export const HoverOverlayAlerts: React.FunctionComponent<HoverOverlayAlertsProps
                     )}
                 >
                     {summary.kind === 'plaintext' ? (
-                        <span className="hover-overlay__content">{summary.value}</span>
+                        <span className={classNames(contentStyles.hoverOverlayContent)}>{summary.value}</span>
                     ) : (
                         <span
-                            className="hover-overlay__content"
+                            className={classNames(contentStyles.hoverOverlayContent)}
                             dangerouslySetInnerHTML={{ __html: renderMarkdown(summary.value) }}
                         />
                     )}
