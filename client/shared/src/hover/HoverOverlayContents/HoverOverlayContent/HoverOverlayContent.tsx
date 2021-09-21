@@ -13,6 +13,7 @@ interface HoverOverlayContentProps {
     index: number
     badgeClassName?: string
     errorAlertClassName?: string
+    contentClassName?: string
 }
 
 function tryMarkdownRender(content: string): string | Error {
@@ -61,7 +62,7 @@ export const HoverOverlayContent: React.FunctionComponent<HoverOverlayContentPro
                 </small>
             ))}
             <span
-                className="hover-overlay__content test-tooltip-content"
+                className={classNames('hover-overlay__content test-tooltip-content', props.contentClassName)}
                 dangerouslySetInnerHTML={{ __html: markdownOrError }}
             />
         </>

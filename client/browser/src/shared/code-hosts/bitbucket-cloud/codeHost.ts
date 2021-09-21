@@ -256,6 +256,8 @@ const codeViewResolver: ViewResolver<CodeView> = {
     },
 }
 
+const suffix = (className: string): string => className + '--bitbucket-cloud'
+
 export const bitbucketCloudCodeHost: CodeHost = {
     type: 'bitbucket-cloud',
     name: 'Bitbucket Cloud',
@@ -264,6 +266,15 @@ export const bitbucketCloudCodeHost: CodeHost = {
     getViewContextOnSourcegraphMount: undefined,
     check: checkIsBitbucketCloud,
     // TODO class names props
+    hoverOverlayClassProps: {
+        className: suffix('hover-overlay'),
+        closeButtonClassName: suffix('hover-overlay__close'),
+        badgeClassName: suffix('hover-overlay__badge'),
+        actionItemClassName: suffix('hover-overlay__action-item'),
+        actionItemPressedClassName: suffix('hover-overlay__action-item-pressed'),
+        iconClassName: suffix('icon'),
+        contentClassName: suffix('hover-overlay__content'),
+    },
     notificationClassNames,
     urlToFile: undefined,
     codeViewsRequireTokenization: false,
