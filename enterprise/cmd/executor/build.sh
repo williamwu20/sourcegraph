@@ -48,4 +48,4 @@ cp -R ./cloudbuild/* "$OUTPUT"
 gcloud builds submit --config="$OUTPUT/cloudbuild.yaml" "$OUTPUT" --project="sourcegraph-ci" --timeout=20m
 
 # TEMPORARY
-cat "$OUTPUT/manifest.json"
+cat "$OUTPUT/cloudbuild/manifest.json"
