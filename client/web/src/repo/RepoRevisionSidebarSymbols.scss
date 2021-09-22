@@ -5,10 +5,11 @@
     min-height: 0;
     padding-top: 0.5rem;
 
-    > .filtered-connection {
+    >.filtered-connection {
         &__form {
             padding-bottom: 0.75rem;
-            > .form-control {
+
+            >.form-control {
                 height: 1.75rem;
                 font-size: 0.75rem;
                 padding: 0.5rem;
@@ -25,6 +26,7 @@
 
     &-node {
         font-size: 0.875rem;
+
         &__link {
             display: block;
             padding: 0.25rem;

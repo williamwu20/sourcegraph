@@ -171,15 +171,16 @@ exports[`SiteAdminProductSubscriptionPage renders 1`] = `
       </button>
     </div>
     <div
-      className="filtered-connection test-filtered-connection filtered-connection--compact list-group list-group-flush"
+      className="normal compact list-group list-group-flush"
+      data-testid="filtered-connection"
     >
       <div
-        className="filtered-connection__summary-container"
+        className="normal"
       >
         
       </div>
       <ul
-        className="filtered-connection__nodes"
+        className="normal"
         data-testid="nodes"
       >
         <SiteAdminProductLicenseNode
@@ -208,7 +209,7 @@ exports[`SiteAdminProductSubscriptionPage renders 1`] = `
         />
       </ul>
       <div
-        className="filtered-connection__summary-container"
+        className="normal"
       />
     </div>
   </div>

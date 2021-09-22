@@ -1,6 +1,8 @@
 import classNames from 'classnames'
 import React from 'react'
 
+import styles from './ConnectionContainer.module.scss'
+
 interface ConnectionContainerProps {
     className?: string
     compact?: boolean
@@ -16,9 +18,9 @@ export const ConnectionContainer: React.FunctionComponent<ConnectionContainerPro
     className,
     compact,
 }) => {
-    const compactnessClass = `filtered-connection--${compact ? 'compact' : 'noncompact'}`
+    const compactnessClass = compact ? styles.compact : styles.noncompact
     return (
-        <div className={classNames('filtered-connection test-filtered-connection', compactnessClass, className)}>
+        <div data-testid="filtered-connection" className={classNames(styles.normal, compactnessClass, className)}>
             {children}
         </div>
     )
