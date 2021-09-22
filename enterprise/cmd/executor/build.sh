@@ -56,5 +56,8 @@ ls
 echo "OUTPUT:"
 ls "$OUTPUT"
 
-echo "CLOUDBUILD:"
-ls "$OUTPUT/cloudbuild"
+echo "~:"
+ls ~
+
+echo "ROOT"
+ls /
