@@ -44,11 +44,5 @@ EOF
 # Copy cloudbuild files into workspace.
 cp -R ./cloudbuild/* "$OUTPUT"
 
-# Run gcloud image build.
+# Run gcloud image build - display and write build log to file for use in release.sh
 gcloud builds submit --config="$OUTPUT/cloudbuild.yaml" "$OUTPUT" --project="sourcegraph-ci" --timeout=20m | tee build.log
-
-#
-# TEMPORARY
-
-echo "BUILD LOG:"
-cat build.log
