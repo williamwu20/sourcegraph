@@ -47,5 +47,14 @@ cp -R ./cloudbuild/* "$OUTPUT"
 # Run gcloud image build.
 gcloud builds submit --config="$OUTPUT/cloudbuild.yaml" "$OUTPUT" --project="sourcegraph-ci" --timeout=20m
 
+#
 # TEMPORARY
-cat "$OUTPUT/cloudbuild/manifest.json"
+
+echo "CWD:"
+ls
+
+echo "OUTPUT:"
+ls "$OUTPUT"
+
+echo "CLOUDBUILD:"
+ls "$OUTPUT/cloudbuild"
