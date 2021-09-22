@@ -8,11 +8,12 @@ import {
     createHttpLink,
     NormalizedCacheObject,
     OperationVariables,
-    QueryHookOptions,
+    QueryHookOptions as ApolloQueryHookOptions,
     QueryResult,
-    MutationHookOptions,
+    MutationHookOptions as ApolloMutationHookOptions,
     MutationTuple,
     QueryTuple,
+    from,
 } from '@apollo/client'
 import { GraphQLError } from 'graphql'
 import { once } from 'lodash'
@@ -25,6 +26,8 @@ import { checkOk } from '../backend/fetch'
 import { createAggregateError } from '../util/errors'
 
 import { cache } from './cache'
+import { ConcurrentRequestsLink } from './links/concurrent-requests-link'
+import { ApolloContext } from './types'
 
 /**
  * Use this template string tag for all GraphQL queries.
@@ -131,10 +134,13 @@ export const getGraphQLClient = once(
                     fetchPolicy: 'network-only',
                 },
             },
-            link: createHttpLink({
-                uri: ({ operationName }) => `${uri}?${operationName}`,
-                headers,
-            }),
+            link: from([
+                new ConcurrentRequestsLink(),
+                createHttpLink({
+                    uri: ({ operationName }) => `${uri}?${operationName}`,
+                    headers,
+                }),
+            ]),
         })
 
         return Promise.resolve(apolloClient)
@@ -159,6 +165,16 @@ export const getDocumentNode = (document: RequestDocument): DocumentNode => {
 const useDocumentNode = (document: RequestDocument): DocumentNode =>
     useMemo(() => getDocumentNode(document), [document])
 
+export interface QueryHookOptions<TData = any, TVariables = OperationVariables>
+    extends Omit<ApolloQueryHookOptions<TData, TVariables>, 'context'> {
+    /**
+     * Shared context information for apollo client. Since internal apollo
+     * types have context as Record<string, any> we have to set this type
+     * directly.
+     */
+    context?: ApolloContext
+}
+
 /**
  * Send a query to GraphQL and respond to updates.
  * Wrapper around Apollo `useQuery` that supports `DocumentNode` and `string` types.
@@ -181,6 +197,16 @@ export function useLazyQuery<TData = any, TVariables = OperationVariables>(
 ): QueryTuple<TData, TVariables> {
     const documentNode = useDocumentNode(query)
     return useApolloLazyQuery(documentNode, options)
+}
+
+interface MutationHookOptions<TData = any, TVariables = OperationVariables>
+    extends Omit<ApolloMutationHookOptions<TData, TVariables>, 'context'> {
+    /**
+     * Shared context information for apollo client. Since internal apollo
+     * types have context as Record<string, any> we have to set this type
+     * directly.
+     */
+    context?: ApolloContext
 }
 
 /**
