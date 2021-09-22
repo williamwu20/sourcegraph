@@ -39,7 +39,11 @@ export const InsightContextMenu: React.FunctionComponent<InsightCardMenuProps> =
                 <>
                     <MenuButton
                         data-testid="InsightContextMenuButton"
-                        className={classnames(menuButtonClassName, 'btn btn-outline p-1', styles.button)}
+                        className={classnames(
+                            menuButtonClassName,
+                            'btn btn-outline p-1 d-flex border-0',
+                            styles.button
+                        )}
                     >
                         <DotsVerticalIcon
                             className={classnames(styles.buttonIcon, { [styles.buttonIconActive]: isOpen })}
