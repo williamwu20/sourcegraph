@@ -45,19 +45,10 @@ EOF
 cp -R ./cloudbuild/* "$OUTPUT"
 
 # Run gcloud image build.
-gcloud builds submit --config="$OUTPUT/cloudbuild.yaml" "$OUTPUT" --project="sourcegraph-ci" --timeout=20m
+gcloud builds submit --config="$OUTPUT/cloudbuild.yaml" "$OUTPUT" --project="sourcegraph-ci" --timeout=20m -machine-readable | tee build.log
 
 #
 # TEMPORARY
 
-echo "CWD:"
-ls
-
-echo "OUTPUT:"
-ls "$OUTPUT"
-
-echo "~:"
-ls ~
-
-echo "ROOT"
-ls /
+echo "BUILD LOG:"
+cat build.log
